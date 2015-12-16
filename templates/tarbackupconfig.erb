@@ -1,0 +1,24 @@
+<% if defined?(@mailto) -%>
+MAILTO="<%= @mailto %>"
+<% end -%>
+DESTINATION="<%= @destination %>"
+<% if defined?(@retention) -%>
+RETENTION="<%= @retention %>"
+<% end -%>
+<% if defined?(@logdir) -%>
+LOGDIR="<%= @logdir %>"
+<% end -%>
+<% if defined?(@idhost) -%>
+IDHOST="<%= @idhost %>"
+<% end -%>
+#tarbackup specific
+<% if @includedir.kind_of?(Array) -%>
+INCLUDEDIR="<%= @includedir.join(" ") %>"
+<% else -%>
+INCLUDEDIR="<%= @includedir %>"
+<% end -%>
+<% if @excludedir.kind_of?(Array) -%>
+EXCLUDEDIR="<%= @excludedir.join(" ") %>"
+<% else -%>
+EXCLUDEDIR="<%= @excludedir %>"
+<% end -%>

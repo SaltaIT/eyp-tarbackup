@@ -1,0 +1,137 @@
+#!/bin/bash
+
+#TODO: custom conf per multiples instances amb el mateix script
+
+function initbck
+{
+	if [ -z "${DESTINATION}" ];
+	then
+		echo "no destination defined"
+		BCKFAILED=1
+	else
+		mkdir -p $DESTINATION
+		BACKUPTS=$(date +%Y%m%d%H%M)
+
+		CURRENTBACKUPLOG="$LOGDIR/$BACKUPTS.log"
+
+		BCKFAILED=999
+
+		if [ -z "$LOGDIR" ];
+		then
+			exec 2>&1
+		else
+			exec >> $CURRENTBACKUPLOG 2>&1
+		fi
+	fi
+}
+
+function mailer
+{
+	MAILCMD=$(which mail 2>/dev/null)
+	if [ -z "$MAILCMD" ];
+	then
+		echo "mail not found, skipping"
+	else
+		if [ -z "$MAILTO" ];
+		then
+			echo "mail skipped, no MAILTO defined"
+			exit $BCKFAILED
+		else
+			if [ -z "$LOGDIR" ];
+			then
+				if [ "$BCKFAILED" -eq 0 ];
+				then
+					echo "OK" | $MAILCMD -s "$IDHOST-<%= @backupname %>-OK" $MAILTO
+				else
+					echo "ERROR - no log file configured" | $MAILCMD -s "$IDHOST-<%= @backupname %>-ERROR" $MAILTO
+				fi
+			else
+				if [ "$BCKFAILED" -eq 0 ];
+				then
+					echo "OK - log: $CURRENTBACKUPLOG" | $MAILCMD -s "$IDHOST-<%= @backupname %>-OK" $MAILTO
+				else
+					echo "ERROR - check log: $CURRENTBACKUPLOG" | $MAILCMD -s "$IDHOST-<%= @backupname %>-ERROR" $MAILTO
+				fi
+			fi
+		fi
+	fi
+}
+
+function tarball
+{
+	LOCKFILE=${LOCKFILE-/tmp/${BASENAMEBCK%%.*}.lock}
+
+	if [ -z "${INCLUDEDIR}" ];
+	then
+		echo "what do you want to backup today?"
+		BCKFAILED=1
+	else
+		if [ ! -f "${LOCKFILE}" ];
+		then
+			touch $LOCKFILE
+
+			if [ ! -z "${EXCLUDEDIR}" ];
+			then
+				EXCLUDEDIR_OPT=$(for i in ${EXCLUDEDIR}; do echo "$i" | sed 's/^/--exclude=/g'; done)
+			fi
+
+			DUMPDEST="$DESTINATION/$BACKUPTS"
+			mkdir -p $DUMPDEST
+
+			tar czvf "$DUMPDEST/${BASENAMEBCK%%.*}.tgz" $INCLUDEDIR $EXCLUDEDIR_OPT --ignore-failed-read
+			tar tvf "$DUMPDEST/${BASENAMEBCK%%.*}.tgz"
+
+			if [ "$?" -ne 0 ];
+			then
+				BCKFAILED=1
+			else
+				BCKFAILED=0
+			fi
+
+			rm $LOCKFILE
+		else
+			echo LOCKED: ${LOCKFILE} BACKUP SKIPPED
+			BCKFAILED=1
+		fi
+	fi
+}
+
+function cleanup
+{
+	if [ -z "$RETENTION" ];
+	then
+		echo "cleanup skipped, no RETENTION defined"
+	else
+		find $DESTINATION -type f -mtime +$RETENTION -delete
+		find $DESTINATION -type d -empty -delete
+	fi
+}
+
+PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
+
+BASEDIRBCK=$(dirname $0)
+BASENAMEBCK=$(basename $0)
+IDHOST=${IDHOST-$(hostname -s)}
+
+if [ ! -z "$1" ] && [ -f "$1" ];
+then
+	. $1 2>/dev/null
+else
+	if [[ -s "$BASEDIRBCK/${BASENAMEBCK%%.*}.config" ]];
+	then
+		. $BASEDIRBCK/${BASENAMEBCK%%.*}.config 2>/dev/null
+	else
+		echo "config file missing"
+		BCKFAILED=1
+	fi
+fi
+
+initbck
+
+if [ "$BCKFAILED" -ne 1 ];
+then
+	tarball
+fi
+
+mailer
+cleanup
