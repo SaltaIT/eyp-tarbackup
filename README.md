@@ -21,7 +21,7 @@ tarbackup script management
 
 ## Module Description
 
-This module
+This module manages include/excludes for a file backup script using tar
 
 ## Setup
 
