@@ -37,6 +37,8 @@ This module requires pluginsync enabled
 
 ### Beginning with tarbackup
 
+basic example:
+
 ```puppet
 class { 'tarbackup':
 }
@@ -47,6 +49,17 @@ tarbackup::instance { 'coses':
   xdev => true,
   destination => '/backup/tarbackup',
 }
+```
+
+This will create the following files:
+* /usr/local/bin/tarbackup.sh
+* /usr/local/bin/tarbackup_coses.config
+
+And add the following cronjob:
+
+```
+# Puppet Name: cronjob tarball backup tarbackup
+0 2 * * * /usr/local/bin/tarbackup.sh /usr/local/bin/tarbackup_coses.config
 ```
 
 ## Usage
@@ -63,7 +76,12 @@ with things. (We are working on automating this section!)
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+Tested on:
+* CentOS 6
+* CentOS 7
+* Ubuntu 16.04
+
+but should work anywhere where there is a **/bin/bash** installed
 
 ## Development
 
