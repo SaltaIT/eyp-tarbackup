@@ -79,7 +79,7 @@ function tarball
 			mkdir -p $DUMPDEST
 
 			tar czvf "$DUMPDEST/${BASENAMEBCK%%.*}.tgz" $INCLUDEDIR $EXCLUDEDIR_OPT --ignore-failed-read
-			tar tvf "$DUMPDEST/${BASENAMEBCK%%.*}.tgz"
+			tar tf "$DUMPDEST/${BASENAMEBCK%%.*}.tgz"
 
 			if [ "$?" -ne 0 ];
 			then
