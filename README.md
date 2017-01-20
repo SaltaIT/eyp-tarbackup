@@ -52,8 +52,9 @@ tarbackup::instance { 'coses':
 ```
 
 This will create the following files:
-* /usr/local/bin/tarbackup.sh
-* /usr/local/bin/tarbackup_coses.config
+
+* **/usr/local/bin/tarbackup.sh**
+* **/usr/local/bin/tarbackup_coses.config**
 
 And add the following cronjob:
 
