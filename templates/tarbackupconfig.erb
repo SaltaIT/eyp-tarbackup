@@ -11,6 +11,7 @@ LOGDIR="<%= @logdir %>"
 <% if defined?(@idhost) -%>
 IDHOST="<%= @idhost %>"
 <% end -%>
+BACKUPNAME="<%= @backupname %>"
 #tarbackup specific
 <% if @includedir.kind_of?(Array) -%>
 INCLUDEDIR="<%= @includedir.join(" ") %>"
@@ -22,3 +23,4 @@ EXCLUDEDIR="<%= @excludedir.join(" ") %>"
 <% else -%>
 EXCLUDEDIR="<%= @excludedir %>"
 <% end -%>
+XDEV=<%= @xdev %>
