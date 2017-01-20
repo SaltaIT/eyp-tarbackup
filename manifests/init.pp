@@ -16,6 +16,7 @@ class tarbackup (
                   $monthday     = undef,
                   $weekday      = undef,
                   $setcron      = true,
+                  $xdev         = false,
                 ){
   #
   file { "${basedir}/${backupscript}.sh":
