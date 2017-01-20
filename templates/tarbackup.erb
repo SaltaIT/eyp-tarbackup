@@ -79,6 +79,7 @@ function tarball
 			mkdir -p $DUMPDEST
 
 			tar czvf "$DUMPDEST/${BASENAMEBCK%%.*}.tgz" $INCLUDEDIR $EXCLUDEDIR_OPT --ignore-failed-read
+			# find /home/sybase -xdev | xargs tar cvf
 			tar tf "$DUMPDEST/${BASENAMEBCK%%.*}.tgz"
 
 			if [ "$?" -ne 0 ];
