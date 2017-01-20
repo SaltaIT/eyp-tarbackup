@@ -51,7 +51,7 @@ class { 'tarbackup':
 
 tarbackup::instance { 'coses':
   includedir => '/etc',
-  excludedir => '/etc/apache2',
+  includedir => '/etc/apache2',
   xdev => true,
   destination => '/backup/tarbackup',
 }
