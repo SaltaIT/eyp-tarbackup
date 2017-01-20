@@ -27,10 +27,9 @@ This module manages include/excludes for a file backup script using tar
 
 ### What tarbackup affects
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
+* backup script installation (managed using **tarbackup**)
+* backup configuration files (managed using **tarbackup::instance**)
+* backup cronjobs (managed using **tarbackup::instance**)
 
 ### Setup Requirements **OPTIONAL**
 
