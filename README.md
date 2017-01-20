@@ -17,7 +17,7 @@
 
 ## Overview
 
-tarbackup script management
+file backup script management
 
 ## Module Description
 
