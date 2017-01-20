@@ -2,7 +2,7 @@
 class tarbackup (
                   $basedir      = '/usr/local/bin',
                   $backupscript = 'tarbackup',
-                ){
+                ) {
 
   file { "${basedir}/${backupscript}.sh":
     ensure  => 'present',
