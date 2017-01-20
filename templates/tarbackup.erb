@@ -78,8 +78,13 @@ function tarball
 			DUMPDEST="$DESTINATION/$BACKUPTS"
 			mkdir -p $DUMPDEST
 
-			tar czvf "$DUMPDEST/${BASENAMEBCK%%.*}.tgz" $INCLUDEDIR $EXCLUDEDIR_OPT --ignore-failed-read
-			# find /home/sybase -xdev | xargs tar cvf
+			if [ "$XDEV"="true" ];
+			then
+				find $INCLUDEDIR -xdev | xargs tar czvf "$DUMPDEST/${BASENAMEBCK%%.*}.tgz" $EXCLUDEDIR_OPT --ignore-failed-read
+			else
+				tar czvf "$DUMPDEST/${BASENAMEBCK%%.*}.tgz" $INCLUDEDIR $EXCLUDEDIR_OPT --ignore-failed-read
+			fi
+
 			tar tf "$DUMPDEST/${BASENAMEBCK%%.*}.tgz"
 
 			if [ "$?" -ne 0 ];
