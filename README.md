@@ -12,38 +12,32 @@
 5. [Reference](#reference)
 5. [Limitations](#limitations)
 6. [Development](#development)
+    * [TODO](#todo)
+    * [Contributing](#contributing)
 
 ## Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves.
-This is your 30 second elevator pitch for your module. Consider including
-OS/Puppet version it works with.
+file backup script management
 
 ## Module Description
 
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
-
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+This module manages include/excludes for a file backup script using tar
 
 ## Setup
 
 ### What tarbackup affects
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
+* backup script installation (managed using **tarbackup**)
+* backup configuration files (managed using **tarbackup::instance**)
+* backup cronjobs (managed using **tarbackup::instance**)
 
 ### Setup Requirements **OPTIONAL**
 
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
+This module requires pluginsync enabled
 
 ### Beginning with tarbackup
+
+basic example:
 
 ```puppet
 class { 'tarbackup':
@@ -51,10 +45,22 @@ class { 'tarbackup':
 
 tarbackup::instance { 'coses':
   includedir => '/etc',
-  excludedir => '/etc/apache2',
+  includedir => '/etc/apache2',
   xdev => true,
   destination => '/backup/tarbackup',
 }
+```
+
+This will create the following files:
+
+* **/usr/local/bin/tarbackup.sh**
+* **/usr/local/bin/tarbackup_coses.config**
+
+And add the following cronjob:
+
+```
+# Puppet Name: cronjob tarball backup tarbackup
+0 2 * * * /usr/local/bin/tarbackup.sh /usr/local/bin/tarbackup_coses.config
 ```
 
 ## Usage
@@ -71,15 +77,25 @@ with things. (We are working on automating this section!)
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+Tested on:
+* CentOS 6
+* CentOS 7
+* Ubuntu 16.04
+
+but should work anywhere where there is a **/bin/bash** installed
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
+We are pushing to have acceptance testing in place, so any new feature should
+have some test to check both presence and absence of any feature
 
-## Release Notes/Contributors/Etc **Optional**
+### TODO
 
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You may also add any additional sections you feel are
-necessary or important to include here. Please use the `## ` header.
+
+### Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Added some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request

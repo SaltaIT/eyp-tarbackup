@@ -2,6 +2,7 @@
 define tarbackup::instance(
                             $destination,
                             $includedir,
+                            $instancename = $name,
                             $backupname   = 'Files',
                             $excludedir   = undef,
                             $retention    = undef,
@@ -19,7 +20,7 @@ define tarbackup::instance(
   #
   include ::tarbackup
 
-  file { "${tarbackup::basedir}/${tarbackup::backupscript}_${name}.config":
+  file { "${tarbackup::basedir}/${tarbackup::backupscript}_${instancename}.config":
     ensure  => 'present',
     owner   => 'root',
     group   => 'root',
@@ -30,14 +31,14 @@ define tarbackup::instance(
   if($setcron)
   {
     cron { "cronjob tarball backup ${tarbackup::backupscript}":
-      command  => "${tarbackup::basedir}/${tarbackup::backupscript}.sh ${tarbackup::basedir}/${tarbackup::backupscript}_${name}.config",
+      command  => "${tarbackup::basedir}/${tarbackup::backupscript}.sh ${tarbackup::basedir}/${tarbackup::backupscript}_${instancename}.config",
       user     => 'root',
       hour     => $hour,
       minute   => $minute,
       month    => $month,
       monthday => $monthday,
       weekday  => $weekday,
-      require  => File[ [ "${tarbackup::basedir}/${tarbackup::backupscript}_${name}.config", "${tarbackup::basedir}/${tarbackup::backupscript}.sh" ] ],
+      require  => File[ [ "${tarbackup::basedir}/${tarbackup::backupscript}_${instancename}.config", "${tarbackup::basedir}/${tarbackup::backupscript}.sh" ] ],
     }
   }
 
