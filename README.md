@@ -85,20 +85,20 @@ installs backup script
 
 adds a cronjob por a given set of files to backup
 
-* **destination**:
 * **includedir**:
-* **instancename**: = $name,
+* **destination**:
+* **instancename**: (default: resource's name)
 * **backupname**:   (default: Files)
-* **excludedir**:   = undef,
-* **retention**:    = undef,
-* **logdir**:       = undef,
-* **mailto**:       = undef,
-* **idhost**:       = undef,
+* **excludedir**:   (default: undef)
+* **retention**:    (default: undef)
+* **logdir**:       (default: undef)
+* **mailto**:       (default: undef)
+* **idhost**:       (default: undef)
 * **hour**:         (default: 2)
 * **minute**:       (default: 0)
-* **month**:        = undef,
-* **monthday**:     = undef,
-* **weekday**:      = undef,
+* **month**:        (default: undef)
+* **monthday**:     (default: undef)
+* **weekday**:      (default: undef)
 * **setcron**:      (default: true)
 * **xdev**:         (default: false)
 
