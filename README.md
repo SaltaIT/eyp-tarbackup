@@ -70,10 +70,37 @@ the fancy stuff with your module here.
 
 ## Reference
 
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+### classes
+
+#### tarbackup
+
+installs backup script
+
+* **basedir**: where to install this script (default: /usr/local/bin)
+* **backupscript**: script name (default: tarbackup)
+
+### define
+
+#### tarbackup::instance
+
+adds a cronjob por a given set of files to backup
+
+* **includedir**:
+* **destination**:
+* **instancename**: (default: resource's name)
+* **backupname**:   (default: Files)
+* **excludedir**:   (default: undef)
+* **retention**:    (default: undef)
+* **logdir**:       (default: undef)
+* **mailto**:       (default: undef)
+* **idhost**:       (default: undef)
+* **hour**:         (default: 2)
+* **minute**:       (default: 0)
+* **month**:        (default: undef)
+* **monthday**:     (default: undef)
+* **weekday**:      (default: undef)
+* **setcron**:      (default: true)
+* **xdev**:         (default: false)
 
 ## Limitations
 
