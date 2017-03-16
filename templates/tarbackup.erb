@@ -12,16 +12,16 @@ function initbck
 		mkdir -p $DESTINATION
 		BACKUPTS=$(date +%Y%m%d%H%M)
 
+		if [ -z "${LOGDIR}" ];
+		then
+			LOGDIR=${DESTINATION}
+		fi
+
 		CURRENTBACKUPLOG="$LOGDIR/$BACKUPTS.log"
 
 		BCKFAILED=999
 
-		if [ -z "$LOGDIR" ];
-		then
-			exec 2>&1
-		else
-			exec >> $CURRENTBACKUPLOG 2>&1
-		fi
+		exec >> $CURRENTBACKUPLOG 2>&1
 	fi
 }
 
