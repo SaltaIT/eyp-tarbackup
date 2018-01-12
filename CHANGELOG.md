@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.4
+
+* moved template backup script to files directory
+
 ## 0.2.3
 
 * bugfix xdev version

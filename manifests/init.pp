@@ -9,7 +9,7 @@ class tarbackup (
     owner   => 'root',
     group   => 'root',
     mode    => '0750',
-    content => template("${module_name}/tarbackup.erb"),
+    content => file("${module_name}/tarbackup.sh"),
   }
 
 }
