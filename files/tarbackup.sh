@@ -80,12 +80,19 @@ function tarball
 
 			if [ "$XDEV"="true" ];
 			then
-				find $INCLUDEDIR -xdev | xargs tar czvf "$DUMPDEST/${BASENAMEBCK%%.*}.tgz" $EXCLUDEDIR_OPT --ignore-failed-read --no-recursion
+				DIR_TMP=$(mktemp -d /tmp/tmp.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX)
+				touch ${DIR_TMP}/.placeholder
+				cd $DIR_TMP
+				tar cf "$DUMPDEST/${BASENAMEBCK%%.*}.tar" .placeholder
+				find $INCLUDEDIR -xdev | xargs -P 1 tar rvf "$DUMPDEST/${BASENAMEBCK%%.*}.tar" $EXCLUDEDIR_OPT --ignore-failed-read --no-recursion
+				cd -
+				rm -fr ${DIR_TMP}
+				gzip -9 "$DUMPDEST/${BASENAMEBCK%%.*}.tar"
 			else
-				tar czvf "$DUMPDEST/${BASENAMEBCK%%.*}.tgz" $INCLUDEDIR $EXCLUDEDIR_OPT --ignore-failed-read
+				tar czvf "$DUMPDEST/${BASENAMEBCK%%.*}.tar.gz" $INCLUDEDIR $EXCLUDEDIR_OPT --ignore-failed-read
 			fi
 
-			tar tf "$DUMPDEST/${BASENAMEBCK%%.*}.tgz"
+			tar tf "$DUMPDEST/${BASENAMEBCK%%.*}.tar.gz"
 
 			if [ "$?" -ne 0 ];
 			then
