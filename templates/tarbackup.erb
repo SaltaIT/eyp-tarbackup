@@ -80,7 +80,7 @@ function tarball
 
 			if [ "$XDEV"="true" ];
 			then
-				find $INCLUDEDIR -xdev | tar czvf "$DUMPDEST/${BASENAMEBCK%%.*}.tgz" $EXCLUDEDIR_OPT --ignore-failed-read --no-recursion
+				find $INCLUDEDIR -xdev | tar czvf "$DUMPDEST/${BASENAMEBCK%%.*}.tgz" $EXCLUDEDIR_OPT --ignore-failed-read --no-recursion -
 			else
 				tar czvf "$DUMPDEST/${BASENAMEBCK%%.*}.tgz" $INCLUDEDIR $EXCLUDEDIR_OPT --ignore-failed-read
 			fi
