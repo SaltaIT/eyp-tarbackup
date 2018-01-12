@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.2
+
+* bugfix xdev version
+
 ## 0.2.1
 
 * default logdir to destination if logdir is undef
