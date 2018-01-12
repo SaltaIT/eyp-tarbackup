@@ -84,7 +84,7 @@ function tarball
 				touch ${DIR_TMP}/.placeholder
 				cd $DIR_TMP
 				tar cf "$DUMPDEST/${BASENAMEBCK%%.*}.tar" .placeholder
-				find $INCLUDEDIR -xdev | xargs -P 1 tar Avf "$DUMPDEST/${BASENAMEBCK%%.*}.tar" $EXCLUDEDIR_OPT --ignore-failed-read --no-recursion
+				find $INCLUDEDIR -xdev | xargs -P 1 tar rvf "$DUMPDEST/${BASENAMEBCK%%.*}.tar" $EXCLUDEDIR_OPT --ignore-failed-read --no-recursion
 				cd -
 				rm -fr ${DIR_TMP}
 				gzip -9 "$DUMPDEST/${BASENAMEBCK%%.*}.tar"
