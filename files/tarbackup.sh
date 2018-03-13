@@ -115,7 +115,14 @@ function cleanup
 	then
 		echo "cleanup skipped, no RETENTION defined"
 	else
-		find $DESTINATION -type f -mtime +$RETENTION -delete
+		for i in $(find $DESTINATION -type f -mtime +$RETENTION);
+		do
+			rm -f $i
+      if [ ! -z "${S3BUCKET}" ];
+      then
+        $AWSBIN s3 rm ${S3BUCKET}/$(basename $i)
+      fi
+		done
 		find $DESTINATION -type d -empty -delete
 	fi
 }
@@ -139,11 +146,32 @@ else
 	fi
 fi
 
+if [ ! -z "${S3BUCKET}" ];
+then
+  AWSBIN=${AWSBIN-$(which aws 2>/dev/null)}
+  if [ -z "$AWSBIN" ];
+  then
+    echo "aws not found"
+    BCKFAILED=1
+  fi
+
+fi
+
 initbck
 
-if [ "$BCKFAILED" -ne 1 ];
+if [ "${BCKFAILED}" -ne 1 ];
 then
 	tarball
+	if [ ! -z "${S3BUCKET}" ];
+	then
+		$AWSBIN s3 cp "$DUMPDEST/${BASENAMEBCK%%.*}.tar.gz" "${S3BUCKET}/${BASENAMEBCK%%.*}.tar.gz"
+
+		if [ "$?" -ne 0 ];
+		then
+			echo "s3 upload failed"
+			BCKFAILED=1
+		fi
+	fi
 fi
 
 mailer

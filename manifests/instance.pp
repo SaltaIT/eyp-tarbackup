@@ -16,6 +16,7 @@ define tarbackup::instance(
                             $weekday      = undef,
                             $setcron      = true,
                             $xdev         = false,
+                            $s3bucket     = undef,
                           ){
   #
   include ::tarbackup

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.5
+
+* optionally upload to S3
+
 ## 0.2.4
 
 * moved template backup script to files directory
