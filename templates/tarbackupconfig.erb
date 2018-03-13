@@ -24,3 +24,6 @@ EXCLUDEDIR="<%= @excludedir.join(" ") %>"
 EXCLUDEDIR="<%= @excludedir %>"
 <% end -%>
 XDEV=<%= @xdev %>
+<% if defined?(@s3s3bucket) -%>
+S3BUCKET="<%= @s3s3bucket %>"
+<% end -%>
