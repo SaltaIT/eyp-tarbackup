@@ -27,3 +27,9 @@ XDEV=<%= @xdev %>
 <% if defined?(@s3s3bucket) -%>
 S3BUCKET="<%= @s3s3bucket %>"
 <% end -%>
+<% if defined?(@prescript) -%>
+PRESCRIPT="<%= @prescript %>"
+<% end -%>
+<% if defined?(@postscript) -%>
+POSTSCRIPT="<%= @postscript %>"
+<% end -%>

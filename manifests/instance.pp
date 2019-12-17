@@ -17,6 +17,8 @@ define tarbackup::instance(
                             $setcron      = true,
                             $xdev         = false,
                             $s3bucket     = undef,
+                            $prescript    = undef,
+                            $postscript   = undef,
                           ){
   #
   include ::tarbackup
