@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.7
+
+* added pre and post hooks
+
 ## 0.2.6
 
 * bugfix: allow files with whitespaces

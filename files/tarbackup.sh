@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#TODO: custom conf per multiples instances amb el mateix script
-
 function initbck
 {
 	if [ -z "${DESTINATION}" ];
@@ -78,6 +76,24 @@ function tarball
 			DUMPDEST="$DESTINATION/$BACKUPTS"
 			mkdir -p $DUMPDEST
 
+			if [ ! -z "${PRESCRIPT}" ];
+			then
+				if [ -x "${PRESCRIPT}" ];
+				then
+					"${PRESCRIPT}"
+					if [ $? -ne 0 ];
+					then
+						echo "error executing pre script: ${PRESCRIPT} (return code is non zero)"
+						BCKFAILED=1
+						return 1
+					fi
+				else
+					echo "please check pre script: ${PRESCRIPT}"
+					BCKFAILED=1
+					return 1
+				fi
+			fi
+
 			if [ "$XDEV"="true" ];
 			then
 				DIR_TMP=$(mktemp -d /tmp/tmp.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX)
@@ -99,6 +115,24 @@ function tarball
 				BCKFAILED=1
 			else
 				BCKFAILED=0
+			fi
+
+			if [ ! -z "${POSTSCRIPT}" ];
+			then
+				if [ -x "${POSTSCRIPT}" ];
+				then
+					"${POSTSCRIPT}"
+					if [ $? -ne 0 ];
+					then
+						echo "error executing post script: ${POSTSCRIPT} (return code is non zero)"
+						BCKFAILED=1
+						return 1
+					fi
+				else
+					echo "please check post script: ${POSTSCRIPT}"
+					BCKFAILED=1
+					return 1
+				fi
 			fi
 
 			rm $LOCKFILE
