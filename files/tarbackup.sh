@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#TODO: custom conf per multiples instances amb el mateix script
-
 function initbck
 {
 	if [ -z "${DESTINATION}" ];
