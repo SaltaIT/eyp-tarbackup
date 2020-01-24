@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.2.8
+
+* optionally compress tar
+* added **s3archive**
+
 ## 0.2.7
 
 * added pre and post hooks
