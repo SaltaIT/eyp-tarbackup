@@ -3,6 +3,7 @@
 ## 0.2.8
 
 * optionally compress tar
+* added **s3archive**
 
 ## 0.2.7
 
