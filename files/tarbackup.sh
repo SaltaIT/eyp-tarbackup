@@ -94,6 +94,13 @@ function tarball
 				fi
 			fi
 
+			if [ ! -z "${GZIP}" ] && [ "${GZIP}" != "0" ];
+			then
+				BACKUP_EXTENSION="tar.gz"
+			else
+				BACKUP_EXTENSION="tar"
+			fi
+
 			if [ "$XDEV"="true" ];
 			then
 				DIR_TMP=$(mktemp -d /tmp/tmp.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX)
@@ -103,12 +110,15 @@ function tarball
 				find $INCLUDEDIR -xdev -print0 | xargs -0 -P 1 tar rvf "$DUMPDEST/${BASENAMEBCK%%.*}.tar" $EXCLUDEDIR_OPT --ignore-failed-read --no-recursion
 				cd -
 				rm -fr ${DIR_TMP}
-				gzip -9 "$DUMPDEST/${BASENAMEBCK%%.*}.tar"
+				if [ ! -z "${GZIP}" ] && [ "${GZIP}" != "0" ];
+				then
+					gzip -9 "$DUMPDEST/${BASENAMEBCK%%.*}.tar"
+				fi
 			else
-				tar czvf "$DUMPDEST/${BASENAMEBCK%%.*}.tar.gz" $INCLUDEDIR $EXCLUDEDIR_OPT --ignore-failed-read
+				tar czvf "$DUMPDEST/${BASENAMEBCK%%.*}.${BACKUP_EXTENSION}" $INCLUDEDIR $EXCLUDEDIR_OPT --ignore-failed-read
 			fi
 
-			tar tf "$DUMPDEST/${BASENAMEBCK%%.*}.tar.gz"
+			tar tf "$DUMPDEST/${BASENAMEBCK%%.*}.${BACKUP_EXTENSION}"
 
 			if [ "$?" -ne 0 ];
 			then
@@ -198,7 +208,7 @@ then
 	tarball
 	if [ ! -z "${S3BUCKET}" ];
 	then
-		$AWSBIN s3 cp "$DUMPDEST/${BASENAMEBCK%%.*}.tar.gz" "${S3BUCKET}/${BASENAMEBCK%%.*}.tar.gz"
+		$AWSBIN s3 cp "$DUMPDEST/${BASENAMEBCK%%.*}.${BACKUP_EXTENSION}" "${S3BUCKET}/${BASENAMEBCK%%.*}.${BACKUP_EXTENSION}"
 
 		if [ "$?" -ne 0 ];
 		then

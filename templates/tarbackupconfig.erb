@@ -33,3 +33,8 @@ PRESCRIPT="<%= @prescript %>"
 <% if defined?(@postscript) -%>
 POSTSCRIPT="<%= @postscript %>"
 <% end -%>
+<% if @gzip -%>
+GZIP=1
+<% else -%>
+GZIP=0
+<% end -%>

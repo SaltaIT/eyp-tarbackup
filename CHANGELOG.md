@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.8
+
+* optionally compress tar
+
 ## 0.2.7
 
 * added pre and post hooks
