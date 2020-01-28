@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.9
+
+* bugfix s3bucket
+
 ## 0.2.8
 
 * optionally compress tar
