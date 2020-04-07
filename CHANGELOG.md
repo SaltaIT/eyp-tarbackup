@@ -3,6 +3,7 @@
 ## 0.2.9
 
 * bugfix tarbackup
+* bugfix s3bucket
 
 ## 0.2.8
 
