@@ -1,8 +1,11 @@
 # CHANGELOG
 
-## 0.2.9
+## 0.2.10
 
 * bugfix tarbackup
+
+## 0.2.9
+
 * bugfix s3bucket
 
 ## 0.2.8
