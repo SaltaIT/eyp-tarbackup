@@ -101,7 +101,7 @@ function tarball
 				BACKUP_EXTENSION="tar"
 			fi
 
-			if [ "$XDEV"="true" ];
+			if [ "$XDEV" = "true" ];
 			then
 				DIR_TMP=$(mktemp -d /tmp/tmp.XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX)
 				touch ${DIR_TMP}/.placeholder
