@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.9
+
+* bugfix tarbackup
+
 ## 0.2.8
 
 * optionally compress tar
