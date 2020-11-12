@@ -4,9 +4,9 @@
   "author": "eyp",
   "summary": "backup script to create tarballs",
   "license": "Apache-2.0",
-  "source": "https://github.com/NTTCom-MS/eyp-tarbackup",
-  "project_page": "https://github.com/NTTCom-MS/eyp-tarbackup",
-  "issues_url": "https://github.com/NTTCom-MS/eyp-tarbackup/issues",
+  "source": "https://github.com/SaltaIT/eyp-tarbackup",
+  "project_page": "https://github.com/SaltaIT/eyp-tarbackup",
+  "issues_url": "https://github.com/SaltaIT/eyp-tarbackup/issues",
   "dependencies": [
     {"name":"puppetlabs/stdlib","version_requirement":">= 1.0.0"}
   ],
