@@ -1,6 +1,6 @@
 {
   "name": "eyp-tarbackup",
-  "version": "0.2.10",
+  "version": "2.0.10",
   "author": "Jordi Prats",
   "summary": "backup script to create tarballs",
   "license": "Apache-2.0",
