@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.11
+
+* Updated metadata for RHEL8 / Ubuntu 18.04, 20.04
+
 ## 0.2.10
 
 * bugfix tarbackup
